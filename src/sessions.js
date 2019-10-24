@@ -45,7 +45,10 @@ export const verify = async ({ sessionId, credential, optionalAttributes }) => {
     .keys(credentialProof)
     .zenroom_exec()
     .reset();
-  sessions[sessionId] = SESSION_STATUS.VALID;
+  sessions[sessionId] = {
+    sessionStatus: SESSION_STATUS.VALID,
+    sharedData: optionalAttributes,
+  };
   return SESSION_STATUS.VALID;
 };
 

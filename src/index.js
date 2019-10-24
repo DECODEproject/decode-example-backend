@@ -13,11 +13,9 @@ app.get('/sessions', (req, res) => {
 });
 
 app.get('/session/:sessionId', (req, res) => {
-  const status = getSession(req.params.sessionId);
-  console.log('getSession ', req.params.sessionId, status);
-  res.send({
-    sessionStatus: getSession(req.params.sessionId) || 'notfound',
-  })
+  const session = getSession(req.params.sessionId) || { sessionStatus: undefined, sharedData: []};
+  console.log('getSession ', req.params.sessionId, session);
+  res.send(session);
 });
 
 app.post('/verify', async (req, res) => {
