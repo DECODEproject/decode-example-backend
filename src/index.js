@@ -1,6 +1,6 @@
 import express from 'express';
 import cors from 'cors';
-import sessions, { newSession, getSession, verify } from './sessions';
+import sessions, { getSession, verify } from './sessions';
 
 const app = express();
 
@@ -12,24 +12,28 @@ app.get('/sessions', (req, res) => {
   res.send(sessions);
 });
 
-app.post('/new-session', (req, res) => {
-  res.send({
-    sessionId: newSession(),
-  })
-});
-
 app.get('/session/:sessionId', (req, res) => {
+  const status = getSession(req.params.sessionId);
+  console.log('getSession ', req.params.sessionId, status);
   res.send({
-    status: getSession(req.params.sessionId) || 'notfound',
+    sessionStatus: getSession(req.params.sessionId) || 'notfound',
   })
 });
 
-app.post('/verify', (req, res) => {
-  res.send({
-    status: verify(req.body),
-  })
+app.post('/verify', async (req, res) => {
+  try {
+    const verified = await verify(req.body);
+    return res.send({
+      sessionStatus: verified,
+    });
+  } catch (error) {
+    console.log('Error: ', error);
+    return res.status(412).send({
+      message: error.message,
+    });
+  }
 });
 
-app.listen(3000, () =>
-  console.log('DECODE example backend listening on port 3000!'),
+app.listen(process.env.PORT, () =>
+  console.log(`DECODE example backend listening on port ${process.env.PORT}!`),
 );

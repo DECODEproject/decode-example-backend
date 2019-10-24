@@ -15,6 +15,9 @@
   "dependencies": {
     "cors": "^2.8.5",
     "express": "^4.17.1",
-    "uuid": "^3.3.3"
+    "node-fetch": "^2.6.0",
+    "ramda": "^0.26.1",
+    "uuid": "^3.3.3",
+    "zenroom": "^1.0.0"
   }
 }
