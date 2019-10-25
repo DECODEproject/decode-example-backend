@@ -32,6 +32,6 @@ app.post('/verify', async (req, res) => {
   }
 });
 
-app.listen(process.env.PORT, () =>
-  console.log(`DECODE example backend listening on port ${process.env.PORT}!`),
+app.listen(process.env.PORT || 3000, () =>
+  console.log(`DECODE example backend listening on port ${process.env.PORT || 3000}!`),
 );
